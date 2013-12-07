@@ -116,7 +116,7 @@ public class NaiveBayes
 			for (int i=1; i<strList.length; i++) {
 				attribute = strList[i];
 				
-				if (!attributeCountP1.containsKey(attribute)) {
+				if (!attributeCountVals.containsKey(attribute)) {
 					continue;					
 				}
 

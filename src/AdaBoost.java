@@ -249,24 +249,8 @@ public class AdaBoost
 		for (int i = 1; i < strList.length; i++) {
 			attribute = strList[i];
 
-			if (!attributeCountP1.get(k).containsKey(attribute)) {
-				if (attribute.split(":")[1] == "0") {
-					attributeCountP1.get(k).put(attribute, classCountP1.get(k));						
-				} else {
-					attributeCountP1.get(k).put(attribute, 0);
-				}
-			}
-			
-			if (!attributeCountN1.get(k).containsKey(attribute)) {
-				if (attribute.split(":")[1] == "0") {
-					attributeCountN1.get(k).put(attribute, classCountN1.get(k));						
-				} else {
-					attributeCountN1.get(k).put(attribute, 0);
-				}
-			}
-			
-			if (!attributeCountVals.containsKey(attribute.split(":")[0])) {
-				attributeCountVals.put(attribute.split(":")[0], Integer.parseInt(attribute.split(":")[1]));					
+			if (!attributeCountVals.containsKey(attribute)) {
+				continue;
 			}
 
 			posCount = 1 + attributeCountP1.get(k).get(attribute);
