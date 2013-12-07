@@ -10,14 +10,12 @@ public class NaiveBayes
 	Map<String, Integer> attributeCountP1, attributeCountN1;
 	Map<String, Integer> attributeCountVals;
 	public int classCountN1, classCountP1, correctCount, incorrectCount;
-	int maxVal;
 	
 	private void trainData() throws IOException
 	{
 		BufferedReader br = new BufferedReader(new FileReader("files/breast_cancer.train"));
 		String str, cls, attribute;
 		String[] strList;
-		int maxVal = -1;
 		
 		while ((str = br.readLine()) != null) {
 			strList = str.split(" ");
@@ -31,10 +29,6 @@ public class NaiveBayes
 			
 			for (int i=1; i<strList.length; i++) {
 				attribute = strList[i];
-				
-				if (Integer.parseInt(attribute.split(":")[0]) > maxVal) {
-					maxVal = Integer.parseInt(attribute.split(":")[0]);
-				}
 				
 				if (cls.equals("-1")) {
 					if (!attributeCountN1.containsKey(attribute)) {
@@ -52,10 +46,6 @@ public class NaiveBayes
 					Integer.parseInt(attribute.split(":")[1]) > attributeCountVals.get(attribute.split(":")[0]))
 				{
 					attributeCountVals.put(attribute.split(":")[0], Integer.parseInt(attribute.split(":")[1]));
-				}
-				
-				if (Integer.parseInt(attribute.split(":")[0]) > maxVal) {
-					maxVal = Integer.parseInt(attribute.split(":")[0]);
 				}
 			}
 		}

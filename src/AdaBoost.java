@@ -58,7 +58,7 @@ public class AdaBoost
 
 		String str, cls, attribute, predictedClass;
 		String[] strList;
-		int rowId, posCount, negCount, maxVal = -1;
+		int rowId, posCount, negCount;
 		double posProbability, negProbability;
 		StringBuilder sb;
 		
@@ -88,10 +88,6 @@ public class AdaBoost
 						attributeCountN1Local.put(attribute, 0);
 					}
 					attributeCountN1Local.put(attribute, attributeCountN1Local.get(attribute) + 1);	
-				}
-				
-				if (Integer.parseInt(attribute.split(":")[0]) > maxVal) {
-					maxVal = Integer.parseInt(attribute.split(":")[0]);
 				}
 			}
 		}
