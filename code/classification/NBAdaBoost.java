@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-public class AdaBoost
+public class NBAdaBoost
 {
 	private List<Double> tupleWeight, errorClassifierList;
 	List<Map<String, Integer>> attributeCountP1, attributeCountN1;
@@ -17,7 +17,7 @@ public class AdaBoost
 	private int K_ITER = 5, SIZE, truePositive, falseNegative, falsePositive, trueNegative;
 	String trainFile, testFile;
 	
-	public AdaBoost(String f1, String f2)
+	public NBAdaBoost(String f1, String f2)
 	{
 		trainFile = f1;
 		testFile = f2;
@@ -341,10 +341,10 @@ public class AdaBoost
 	
 	public static void main(String[] args) throws IOException
 	{
-		AdaBoost main = new AdaBoost(args[0], args[0]);
+		NBAdaBoost main = new NBAdaBoost(args[0], args[0]);
 		main.run();
 		
-		main = new AdaBoost(args[0], args[1]);
+		main = new NBAdaBoost(args[0], args[1]);
 		main.run();
 		
 		System.exit(0);
