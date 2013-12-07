@@ -115,14 +115,6 @@ public class AdaBoost
 			attributeCountN1Local.put(e.getKey() + ":0", classCountN1Local - n);
 		}
 		
-		for (int i=1; i<=maxVal; i++) {
-			if (!attributeCountVals.containsKey(i + "")) {
-				attributeCountP1Local.put(i + ":0", classCountP1Local);
-				attributeCountN1Local.put(i + ":0", classCountN1Local);
-				attributeCountVals.put(i + "", 0);
-			}
-		}
-		
 		for (int i=0; i<rowIds.size(); i++) {
 			str = tuples.get(rowIds.get(i)).trim();
 			sb = new StringBuilder(str);
@@ -141,24 +133,8 @@ public class AdaBoost
 			for (int j=1; j<strList.length; j++) {
 				attribute = strList[j];
 
-				if (!attributeCountP1Local.containsKey(attribute)) {
-					if (attribute.split(":")[1] == "0") {
-						attributeCountP1Local.put(attribute, classCountP1Local);						
-					} else {
-						attributeCountP1Local.put(attribute, 0);
-					}
-				}
-				
-				if (!attributeCountN1Local.containsKey(attribute)) {
-					if (attribute.split(":")[1] == "0") {
-						attributeCountN1Local.put(attribute, classCountN1Local);						
-					} else {
-						attributeCountN1Local.put(attribute, 0);
-					}
-				}
-				
 				if (!attributeCountVals.containsKey(attribute.split(":")[0])) {
-					attributeCountVals.put(attribute.split(":")[0], Integer.parseInt(attribute.split(":")[1]));					
+					continue;					
 				}
 
 				posCount = 1 + attributeCountP1Local.get(attribute);

@@ -79,14 +79,6 @@ public class NaiveBayes
 			attributeCountN1.put(e.getKey() + ":0", classCountN1 - n);
 		}
 		
-		for (int i=1; i<=maxVal; i++) {
-			if (!attributeCountVals.containsKey(i + "")) {
-				attributeCountP1.put(i + ":0", classCountP1);
-				attributeCountN1.put(i + ":0", classCountN1);
-				attributeCountVals.put(i + "", 0);
-			}
-		}
-		
 		br.close();
 	}
 	
