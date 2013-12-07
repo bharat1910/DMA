@@ -293,11 +293,11 @@ public class AdaBoost
 			} else if (predictedCls.equals("+1") && !predictedCls.equals(cls)){
 				falsePositive += 1;
 			} else {
-				truePositive += 1;
+				trueNegative += 1;
 			}
 		}
 		
-		System.out.println(truePositive + " " + falseNegative + " " + falsePositive + " " + truePositive);
+		System.out.println(truePositive + " " + falseNegative + " " + falsePositive + " " + trueNegative);
 		
 		br.close();
 	}

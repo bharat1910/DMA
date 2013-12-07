@@ -132,11 +132,11 @@ public class NaiveBayes
 			} else if (predictedClass.equals("+1") && !predictedClass.equals(cls)){
 				falsePositive += 1;
 			} else {
-				truePositive += 1;
+				trueNegative += 1;
 			}
 		}
 		
-		System.out.println(truePositive + " " + falseNegative + " " + falsePositive + " " + truePositive);
+		System.out.println(truePositive + " " + falseNegative + " " + falsePositive + " " + trueNegative);
 		
 		br.close();
 	}
