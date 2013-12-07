@@ -14,7 +14,7 @@ public class AdaBoost
 	public List<Integer> classCountN1, classCountP1, correctCount, incorrectCount;
 	Map<String, Integer> attributeCountVals;
 	List<String> tuples;
-	private int K_ITER = 10, SIZE;
+	private int K_ITER = 2, SIZE;
 	
 	private void readTuples() throws IOException
 	{
@@ -89,6 +89,12 @@ public class AdaBoost
 					}
 					attributeCountN1Local.put(attribute, attributeCountN1Local.get(attribute) + 1);	
 				}
+				
+				if (!attributeCountVals.containsKey(attribute.split(":")[0]) || 
+					Integer.parseInt(attribute.split(":")[1]) > attributeCountVals.get(attribute.split(":")[0]))
+				{
+					attributeCountVals.put(attribute.split(":")[0], Integer.parseInt(attribute.split(":")[1]));
+				}
 			}
 		}
 		
@@ -129,7 +135,7 @@ public class AdaBoost
 			for (int j=1; j<strList.length; j++) {
 				attribute = strList[j];
 
-				if (!attributeCountVals.containsKey(attribute.split(":")[0])) {
+				if (!attributeCountP1Local.containsKey(attribute)) {
 					continue;					
 				}
 
@@ -222,7 +228,7 @@ public class AdaBoost
 		for (int i = 1; i < strList.length; i++) {
 			attribute = strList[i];
 
-			if (!attributeCountVals.containsKey(attribute)) {
+			if (!attributeCountP1.get(k).containsKey(attribute)) {
 				continue;
 			}
 
