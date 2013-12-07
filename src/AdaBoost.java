@@ -14,11 +14,11 @@ public class AdaBoost
 	public List<Integer> classCountN1, classCountP1, correctCount, incorrectCount;
 	Map<String, Integer> attributeCountVals;
 	List<String> tuples;
-	private int K_ITER = 2, SIZE;
+	private int K_ITER = 10, SIZE;
 	
 	private void readTuples() throws IOException
 	{
-		BufferedReader br = new BufferedReader(new FileReader("files/a1a.train"));
+		BufferedReader br = new BufferedReader(new FileReader("files/breast_cancer.train"));
 		String str;
 		
 		while ((str = br.readLine()) != null) {
@@ -165,7 +165,10 @@ public class AdaBoost
 			}
 		}
 		
-		if ((incorrectCountLocal / (double) (correctCountLocal + incorrectCountLocal)) > 0.5) {
+		if ((incorrectCountLocal / (double) (correctCountLocal + incorrectCountLocal)) > 0.5 ||
+			(classCountP1Local == 0) ||
+			(classCountN1Local == 0))
+		{
 			//System.out.println(incorrectCountLocal / (double) (correctCountLocal + incorrectCountLocal));
 			buildClassifier();
 			return;
@@ -254,7 +257,7 @@ public class AdaBoost
 	private void testData() throws IOException
 	{
 		double resultPos, resultNeg;
-		BufferedReader br = new BufferedReader(new FileReader("files/a1a.test"));
+		BufferedReader br = new BufferedReader(new FileReader("files/breast_cancer.test"));
 		String str, cls, predictedCls;
 		int prediction, correctCountLocal = 0, incorrectCountLocal = 0;
 		
