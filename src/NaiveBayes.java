@@ -14,7 +14,7 @@ public class NaiveBayes
 	
 	private void trainData() throws IOException
 	{
-		BufferedReader br = new BufferedReader(new FileReader("files/a1a.train"));
+		BufferedReader br = new BufferedReader(new FileReader("files/breast_cancer.train"));
 		String str, cls, attribute;
 		String[] strList;
 		int maxVal = -1;
@@ -92,7 +92,7 @@ public class NaiveBayes
 	
 	private void testData() throws IOException
 	{
-		BufferedReader br = new BufferedReader(new FileReader("files/a1a.test"));
+		BufferedReader br = new BufferedReader(new FileReader("files/breast_cancer.test"));
 		String str, cls, attribute, predictedClass;
 		String[] strList;
 		double posProbability, negProbability;
@@ -117,23 +117,7 @@ public class NaiveBayes
 				attribute = strList[i];
 				
 				if (!attributeCountP1.containsKey(attribute)) {
-					if (attribute.split(":")[1] == "0") {
-						attributeCountP1.put(attribute, classCountP1);						
-					} else {
-						attributeCountP1.put(attribute, 0);
-					}
-				}
-				
-				if (!attributeCountN1.containsKey(attribute)) {
-					if (attribute.split(":")[1] == "0") {
-						attributeCountN1.put(attribute, classCountN1);						
-					} else {
-						attributeCountN1.put(attribute, 0);
-					}
-				}
-				
-				if (!attributeCountVals.containsKey(attribute.split(":")[0])) {
-					attributeCountVals.put(attribute.split(":")[0], Integer.parseInt(attribute.split(":")[1]));					
+					continue;					
 				}
 
 				posCount = 1 + attributeCountP1.get(attribute);
