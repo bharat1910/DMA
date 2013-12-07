@@ -160,7 +160,7 @@ public class AdaBoost
 		}
 		
 		if ((incorrectCountLocal / (double) (correctCountLocal + incorrectCountLocal)) > 0.5) {
-			System.out.println(incorrectCountLocal / (double) (correctCountLocal + incorrectCountLocal));
+			//System.out.println(incorrectCountLocal / (double) (correctCountLocal + incorrectCountLocal));
 			buildClassifier();
 			return;
 		}
