@@ -9,7 +9,7 @@ public class NaiveBayes
 {
 	Map<String, Integer> attributeCountP1, attributeCountN1;
 	Map<String, Integer> attributeCountVals;
-	public int classCountN1, classCountP1, correctCount, incorrectCount;
+	public int classCountN1, classCountP1, truePositive, falseNegative, falsePositive, trueNegative;
 	String trainFile, testFile;
 	
 	public NaiveBayes(String f1, String f2)
@@ -125,15 +125,18 @@ public class NaiveBayes
 				predictedClass = "-1";
 			}
 			
-			if (predictedClass.equals(cls)) {
-				correctCount += 1;
+			if (predictedClass.equals("+1") && predictedClass.equals(cls)) {
+				truePositive += 1;
+			} else if (predictedClass.equals("-1") && !predictedClass.equals(cls)){
+				falseNegative += 1;
+			} else if (predictedClass.equals("+1") && !predictedClass.equals(cls)){
+				falsePositive += 1;
 			} else {
-				incorrectCount += 1;
+				truePositive += 1;
 			}
 		}
 		
-		System.out.println(correctCount);
-		System.out.println(incorrectCount);
+		System.out.println(truePositive + " " + falseNegative + " " + falsePositive + " " + truePositive);
 		
 		br.close();
 	}
@@ -145,8 +148,10 @@ public class NaiveBayes
 		attributeCountVals = new HashMap<>();
 		classCountN1 = 0;
 		classCountP1 = 0;
-		correctCount = 0;
-		incorrectCount = 0;
+		truePositive = 0;
+		falseNegative = 0;
+		falsePositive = 0;
+		trueNegative = 0;
 		
 		trainData();
 		

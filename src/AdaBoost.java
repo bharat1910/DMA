@@ -11,10 +11,10 @@ public class AdaBoost
 {
 	private List<Double> tupleWeight, errorClassifierList;
 	List<Map<String, Integer>> attributeCountP1, attributeCountN1;
-	public List<Integer> classCountN1, classCountP1, correctCount, incorrectCount;
+	public List<Integer> classCountN1, classCountP1;
 	Map<String, Integer> attributeCountVals;
 	List<String> tuples;
-	private int K_ITER = 10, SIZE;
+	private int K_ITER = 10, SIZE, truePositive, falseNegative, falsePositive, trueNegative;
 	String trainFile, testFile;
 	
 	public AdaBoost(String f1, String f2)
@@ -185,8 +185,6 @@ public class AdaBoost
 		attributeCountN1.add(attributeCountN1Local);
 		classCountP1.add(classCountP1Local);
 		classCountN1.add(classCountN1Local);
-		correctCount.add(correctCountLocal);
-		incorrectCount.add(incorrectCountLocal);
 		
 		double errorClassifier = 0;
 		for (int id : incorrectIds) {
@@ -266,7 +264,7 @@ public class AdaBoost
 		double resultPos, resultNeg;
 		BufferedReader br = new BufferedReader(new FileReader(testFile));
 		String str, cls, predictedCls;
-		int prediction, correctCountLocal = 0, incorrectCountLocal = 0;
+		int prediction;
 		
 		while ((str = br.readLine()) != null) {
 			resultPos = 0;
@@ -288,15 +286,18 @@ public class AdaBoost
 				predictedCls = "-1";
 			}
 			
-			if (predictedCls.equals(cls)) {
-				correctCountLocal++;
+			if (predictedCls.equals("+1") && predictedCls.equals(cls)) {
+				truePositive += 1;
+			} else if (predictedCls.equals("-1") && !predictedCls.equals(cls)){
+				falseNegative += 1;
+			} else if (predictedCls.equals("+1") && !predictedCls.equals(cls)){
+				falsePositive += 1;
 			} else {
-				incorrectCountLocal++;
+				truePositive += 1;
 			}
 		}
 		
-		System.out.println(correctCountLocal);
-		System.out.println(incorrectCountLocal);
+		System.out.println(truePositive + " " + falseNegative + " " + falsePositive + " " + truePositive);
 		
 		br.close();
 	}
@@ -317,9 +318,11 @@ public class AdaBoost
 		attributeCountVals = new HashMap<>();
 		classCountP1 = new ArrayList<>();
 		classCountN1 = new ArrayList<>();
-		correctCount = new ArrayList<>();
-		incorrectCount = new ArrayList<>();
 		errorClassifierList = new ArrayList<>();
+		truePositive = 0;
+		falseNegative = 0;
+		falsePositive = 0;
+		trueNegative = 0;
 				
 		trainData();
 		testData();
