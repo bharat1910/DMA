@@ -14,7 +14,7 @@ public class AdaBoost
 	public List<Integer> classCountN1, classCountP1;
 	Map<String, Integer> attributeCountVals;
 	List<String> tuples;
-	private int K_ITER = 10, SIZE, truePositive, falseNegative, falsePositive, trueNegative;
+	private int K_ITER = 5, SIZE, truePositive, falseNegative, falsePositive, trueNegative;
 	String trainFile, testFile;
 	
 	public AdaBoost(String f1, String f2)
@@ -49,7 +49,7 @@ public class AdaBoost
 		return 0;
 	}
 	
-	private void buildClassifier()
+	private boolean buildClassifier()
 	{
 		Map<String, Integer> attributeCountP1Local = new HashMap<>(),
 							 attributeCountN1Local = new HashMap<>();
@@ -177,8 +177,7 @@ public class AdaBoost
 			(classCountN1Local == 0))
 		{
 			//System.out.println(incorrectCountLocal / (double) (correctCountLocal + incorrectCountLocal));
-			buildClassifier();
-			return;
+			return false;
 		}
 
 		attributeCountP1.add(attributeCountP1Local);
@@ -204,12 +203,17 @@ public class AdaBoost
 		for (int i=0; i<tupleWeight.size(); i++) {
 			tupleWeight.set(i, tupleWeight.get(i) / newWeight);
 		}
+		
+		return true;
 	}
 	
 	private void trainData()
 	{
 		for (int i=0; i<K_ITER; i++) {
-			buildClassifier();
+			boolean flag = false;
+			while(!flag) {
+				flag = buildClassifier();
+			}
 		}
 	}
 	
