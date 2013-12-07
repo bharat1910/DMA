@@ -10,10 +10,17 @@ public class NaiveBayes
 	Map<String, Integer> attributeCountP1, attributeCountN1;
 	Map<String, Integer> attributeCountVals;
 	public int classCountN1, classCountP1, correctCount, incorrectCount;
+	String trainFile, testFile;
+	
+	public NaiveBayes(String f1, String f2)
+	{
+		trainFile = f1;
+		testFile = f2;
+	}
 	
 	private void trainData() throws IOException
 	{
-		BufferedReader br = new BufferedReader(new FileReader("files/breast_cancer.train"));
+		BufferedReader br = new BufferedReader(new FileReader(trainFile));
 		String str, cls, attribute;
 		String[] strList;
 		
@@ -74,7 +81,7 @@ public class NaiveBayes
 	
 	private void testData() throws IOException
 	{
-		BufferedReader br = new BufferedReader(new FileReader("files/breast_cancer.test"));
+		BufferedReader br = new BufferedReader(new FileReader(testFile));
 		String str, cls, attribute, predictedClass;
 		String[] strList;
 		double posProbability, negProbability;
@@ -148,8 +155,12 @@ public class NaiveBayes
 	
 	public static void main(String[] args) throws IOException
 	{
-		NaiveBayes main = new NaiveBayes();
+		NaiveBayes main = new NaiveBayes(args[0], args[0]);
 		main.run();
+		
+		main = new NaiveBayes(args[0], args[1]);
+		main.run();
+		
 		System.exit(0);
 	}
 }

@@ -15,10 +15,17 @@ public class AdaBoost
 	Map<String, Integer> attributeCountVals;
 	List<String> tuples;
 	private int K_ITER = 10, SIZE;
+	String trainFile, testFile;
+	
+	public AdaBoost(String f1, String f2)
+	{
+		trainFile = f1;
+		testFile = f2;
+	}
 	
 	private void readTuples() throws IOException
 	{
-		BufferedReader br = new BufferedReader(new FileReader("files/breast_cancer.train"));
+		BufferedReader br = new BufferedReader(new FileReader(trainFile));
 		String str;
 		
 		while ((str = br.readLine()) != null) {
@@ -257,7 +264,7 @@ public class AdaBoost
 	private void testData() throws IOException
 	{
 		double resultPos, resultNeg;
-		BufferedReader br = new BufferedReader(new FileReader("files/breast_cancer.test"));
+		BufferedReader br = new BufferedReader(new FileReader(testFile));
 		String str, cls, predictedCls;
 		int prediction, correctCountLocal = 0, incorrectCountLocal = 0;
 		
@@ -327,8 +334,12 @@ public class AdaBoost
 	
 	public static void main(String[] args) throws IOException
 	{
-		AdaBoost main = new AdaBoost();
+		AdaBoost main = new AdaBoost(args[0], args[0]);
 		main.run();
+		
+		main = new AdaBoost(args[0], args[1]);
+		main.run();
+		
 		System.exit(0);
 	}
 }
