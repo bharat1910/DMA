@@ -355,12 +355,6 @@ public class NBAdaBoost
 		testData(testFile);
 
 		System.out.println(end - start);
-//		double test = 0;
-//		for (int i=0; i<tupleWeight.size(); i++) {
-//			test += tupleWeight.get(i);
-//			System.out.println(tupleWeight.get(i));
-//		}
-//		System.out.println(test);
 	}
 	
 	public static void main(String[] args) throws IOException
