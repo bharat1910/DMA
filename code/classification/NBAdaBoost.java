@@ -18,7 +18,7 @@ public class NBAdaBoost
 	public List<Integer> classCountN1, classCountP1;
 	Map<String, Integer> attributeCountVals;
 	List<String> tuples;
-	private int K_ITER = 30, SIZE, truePositive, falseNegative, falsePositive, trueNegative;
+	private int K_ITER = 5, SIZE, truePositive, falseNegative, falsePositive, trueNegative;
 	String trainFile, testFile;
 	
 	public NBAdaBoost(String f1, String f2)
