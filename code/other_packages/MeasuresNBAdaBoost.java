@@ -327,10 +327,27 @@ public class MeasuresNBAdaBoost
 			}
 		}
 		
-		System.out.println(truePositive + " " + falseNegative + " " + falsePositive + " " + trueNegative);
+		Double accuracy = (truePositive + trueNegative) / (truePositive + falsePositive + falseNegative + trueNegative);
+		Double errorRate = 	(falseNegative + falsePositive) / (truePositive + falsePositive + falseNegative + trueNegative);
+		Double sensitivity = truePositive / (truePositive + falseNegative);
+		Double specificity = trueNegative / (trueNegative + falsePositive);
+		Double precision = truePositive / (truePositive + falsePositive);
+		Double f1score = (2 * precision * sensitivity) / (precision + sensitivity);
 		
-		System.out.println("Accuracy : " + ((truePositive + trueNegative) * 100.00 / (truePositive + falsePositive + falseNegative + trueNegative)));
+		double b = 0.5;
+		Double fb05 = ((1 + (b * b)) * precision * sensitivity) / ((b * b * precision) + sensitivity );
 		
+		b = 2;
+		Double fb2 = ((1 + (b * b)) * precision * sensitivity) / ((b * b * precision) + sensitivity );
+		
+		System.out.println("Accuracy            : " + accuracy * 100);
+		System.out.println("Error Rate          : " + errorRate * 100);
+		System.out.println("Sensitivity         : " + sensitivity * 100);
+		System.out.println("Specificity         : " + specificity * 100);
+		System.out.println("Precision           : " + precision * 100);
+		System.out.println("F-1 Score           : " + f1score);
+		System.out.println("F Score(beta = 0.5) : " + fb05);
+		System.out.println("F Score (beta = 2)  : " + fb2);		
 		
 		br.close();
 	}
@@ -357,6 +374,8 @@ public class MeasuresNBAdaBoost
 		} while (!trainData());
 
 		testData(trainFile);
+		
+		System.out.println();
 		
 		testData(testFile);
 	}
