@@ -164,18 +164,11 @@ public class NaiveBayes
 		classCountN1 = 0;
 		classCountP1 = 0;
 		
-		long start = System.currentTimeMillis();
 		trainData();
-		long end = System.currentTimeMillis();
 		
 		testData(trainFile);
 		
-		long start2 = System.currentTimeMillis();
 		testData(testFile);
-		long end2 = System.currentTimeMillis();
-		
-		System.out.println(end - start);
-		System.out.println(end2 - start2);
 	}
 	
 	public static void main(String[] args) throws IOException
