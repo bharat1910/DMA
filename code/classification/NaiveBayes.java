@@ -88,21 +88,29 @@ public class NaiveBayes
 		String[] strList;
 		double posProbability, negProbability;
 		int posCount, negCount;
-		StringBuilder sb;
 		
 		while ((str = br.readLine()) != null) {
 			posProbability = 1;
 			negProbability = 1;
 			str = str.trim();
-			sb = new StringBuilder(str.trim());
 
 			for (Entry<String, Integer> e : attributeCountVals.entrySet()) {
 				if (!str.contains(" " + e.getKey() + ":")) {
-					sb.append(" " + e.getKey() + ":0");
+					attribute = e.getKey() + ":0";
+					
+					if (!attributeCountP1.containsKey(attribute)) {
+						continue;					
+					}
+
+					posCount = 1 + attributeCountP1.get(attribute);
+					negCount = 1 + attributeCountN1.get(attribute);
+
+					posProbability += Math.log(posCount/ (double) (classCountP1 + attributeCountVals.get(attribute.split(":")[0]) + 1));
+					negProbability += Math.log(negCount/ (double) (classCountN1 + attributeCountVals.get(attribute.split(":")[0]) + 1));
 				}
 			}
 			
-			strList = sb.toString().split(" ");
+			strList = str.trim().split(" ");
 			cls = strList[0];	
 			for (int i=1; i<strList.length; i++) {
 				attribute = strList[i];
@@ -155,9 +163,16 @@ public class NaiveBayes
 		falsePositive = 0;
 		trueNegative = 0;
 		
+		long start = System.currentTimeMillis();
 		trainData();
+		long end = System.currentTimeMillis();
 		
+		long start2 = System.currentTimeMillis();
 		testData();
+		long end2 = System.currentTimeMillis();
+		
+		System.out.println(end - start);
+		System.out.println(end2 -start2);
 	}
 	
 	public static void main(String[] args) throws IOException
