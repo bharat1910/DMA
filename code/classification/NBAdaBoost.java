@@ -280,10 +280,10 @@ public class NBAdaBoost
 		}
 	}
 	
-	private void testData() throws IOException
+	private void testData(String fileName) throws IOException
 	{
 		double resultPos, resultNeg;
-		BufferedReader br = new BufferedReader(new FileReader(testFile));
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		String str, cls, predictedCls;
 		int prediction;
 		
@@ -349,12 +349,11 @@ public class NBAdaBoost
 		trainData();
 		long end = System.currentTimeMillis();
 		
-		long start2 = System.currentTimeMillis();
-		testData();
-		long end2 = System.currentTimeMillis();
+		testData(trainFile);
+		
+		testData(testFile);
 
 		System.out.println(end - start);
-		System.out.println(end2 - start2);
 //		double test = 0;
 //		for (int i=0; i<tupleWeight.size(); i++) {
 //			test += tupleWeight.get(i);
@@ -365,10 +364,7 @@ public class NBAdaBoost
 	
 	public static void main(String[] args) throws IOException
 	{
-		NBAdaBoost main = new NBAdaBoost(args[0], args[0]);
-		main.run();
-		
-		main = new NBAdaBoost(args[0], args[1]);
+		NBAdaBoost main = new NBAdaBoost(args[0], args[1]);
 		main.run();
 		
 		System.exit(0);

@@ -81,9 +81,9 @@ public class NaiveBayes
 		br.close();
 	}
 	
-	private void testData() throws IOException
+	private void testData(String fileName) throws IOException
 	{
-		BufferedReader br = new BufferedReader(new FileReader(testFile));
+		BufferedReader br = new BufferedReader(new FileReader(fileName));
 		String str, cls, attribute, predictedClass;
 		String[] strList;
 		double posProbability, negProbability;
@@ -167,20 +167,16 @@ public class NaiveBayes
 		trainData();
 		long end = System.currentTimeMillis();
 		
-		long start2 = System.currentTimeMillis();
-		testData();
-		long end2 = System.currentTimeMillis();
+		testData(trainFile);
+		
+		testData(testFile);
 		
 		System.out.println(end - start);
-		System.out.println(end2 -start2);
 	}
 	
 	public static void main(String[] args) throws IOException
 	{
-		NaiveBayes main = new NaiveBayes(args[0], args[0]);
-		main.run();
-		
-		main = new NaiveBayes(args[0], args[1]);
+		NaiveBayes main = new NaiveBayes(args[0], args[1]);
 		main.run();
 		
 		System.exit(0);
