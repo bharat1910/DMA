@@ -5,9 +5,11 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 public class NBAdaBoost
 {
@@ -61,9 +63,9 @@ public class NBAdaBoost
 			correctCountLocal = 0,
 			incorrectCountLocal = 0;
 		
-		List<Integer> rowIds = new ArrayList<>(),
-					  correctIds = new ArrayList<>(),
-					  incorrectIds = new ArrayList<>();
+		List<Integer> rowIds = new ArrayList<>();
+		Set<Integer> correctIds = new HashSet<>(),
+					 incorrectIds = new HashSet<>();
 
 		String str, cls, attribute, predictedClass;
 		String[] strList;
