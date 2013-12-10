@@ -69,7 +69,6 @@ public class NBAdaBoost
 		String[] strList;
 		int rowId, posCount, negCount;
 		double posProbability, negProbability;
-		StringBuilder sb;
 		
 		for (int i=0; i<SIZE; i++) {
 			rowId = returnItemBasedOnWeight();
@@ -128,19 +127,27 @@ public class NBAdaBoost
 		
 		for (int i=0; i<rowIds.size(); i++) {
 			str = tuples.get(rowIds.get(i)).trim();
-			sb = new StringBuilder(str);
-			
+			posProbability = 1;
+			negProbability = 1;
+
 			for (Entry<String, Integer> e : attributeCountVals.entrySet()) {
 				if (!str.contains(" " + e.getKey() + ":")) {
-					sb.append(" " + e.getKey() + ":0");
+					attribute = e.getKey() + ":0";
+
+					if (!attributeCountP1Local.containsKey(attribute)) {
+						continue;					
+					}
+
+					posCount = 1 + attributeCountP1Local.get(attribute);
+					negCount = 1 + attributeCountN1Local.get(attribute);
+
+					posProbability += Math.log(posCount/ (double) (classCountP1Local + attributeCountVals.get(attribute.split(":")[0]) + 1));
+					negProbability += Math.log(negCount/ (double) (classCountN1Local + attributeCountVals.get(attribute.split(":")[0]) + 1));
 				}
 			}
 			
-			strList = sb.toString().split(" ");
+			strList = str.split(" ");
 			cls = strList[0];
-			posProbability = 1;
-			negProbability = 1;
-			
 			for (int j=1; j<strList.length; j++) {
 				attribute = strList[j];
 
@@ -227,18 +234,26 @@ public class NBAdaBoost
 		int posCount, negCount;
 		
 		str = str.trim();
-		StringBuilder sb = new StringBuilder(str.trim());
-
-		for (Entry<String, Integer> e : attributeCountVals.entrySet()) {
-			if (!str.contains(" " + e.getKey() + ":")) {
-				sb.append(" " + e.getKey() + ":0");
-			}
-		}
-		
-		strList = sb.toString().split(" ");
 		posProbability = 1;
 		negProbability = 1;
 
+		for (Entry<String, Integer> e : attributeCountVals.entrySet()) {
+			if (!str.contains(" " + e.getKey() + ":")) {
+				attribute = e.getKey() + ":0";
+
+				if (!attributeCountP1.get(k).containsKey(attribute)) {
+					continue;
+				}
+
+				posCount = 1 + attributeCountP1.get(k).get(attribute);
+				negCount = 1 + attributeCountN1.get(k).get(attribute);
+
+				posProbability += Math.log(posCount/ (double) (classCountP1.get(k) + attributeCountVals.get(attribute.split(":")[0]) + 1));
+				negProbability += Math.log(negCount/ (double) (classCountN1.get(k) + attributeCountVals.get(attribute.split(":")[0]) + 1));
+			}
+		}
+		
+		strList = str.split(" ");
 		for (int i = 1; i < strList.length; i++) {
 			attribute = strList[i];
 
@@ -330,9 +345,16 @@ public class NBAdaBoost
 		falsePositive = 0;
 		trueNegative = 0;
 				
+		long start = System.currentTimeMillis();
 		trainData();
+		long end = System.currentTimeMillis();
+		
+		long start2 = System.currentTimeMillis();
 		testData();
-//		
+		long end2 = System.currentTimeMillis();
+
+		System.out.println(end - start);
+		System.out.println(end2 - start2);
 //		double test = 0;
 //		for (int i=0; i<tupleWeight.size(); i++) {
 //			test += tupleWeight.get(i);
