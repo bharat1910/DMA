@@ -18,7 +18,7 @@ public class NBAdaBoost
 	public List<Integer> classCountN1, classCountP1;
 	Map<String, Integer> attributeCountVals;
 	List<String> tuples;
-	private int K_ITER = 5, SIZE, truePositive, falseNegative, falsePositive, trueNegative;
+	private int K_ITER = 30, SIZE, truePositive, falseNegative, falsePositive, trueNegative;
 	String trainFile, testFile;
 	
 	public NBAdaBoost(String f1, String f2)
@@ -127,8 +127,8 @@ public class NBAdaBoost
 			attributeCountN1Local.put(e.getKey() + ":0", classCountN1Local - n);
 		}
 		
-		for (int i=0; i<rowIds.size(); i++) {
-			str = tuples.get(rowIds.get(i)).trim();
+		for (int i=0; i<tuples.size(); i++) {
+			str = tuples.get(i).trim();
 			posProbability = 1;
 			negProbability = 1;
 
@@ -221,8 +221,11 @@ public class NBAdaBoost
 	private boolean trainData()
 	{
 		for (int i=0; i<K_ITER; i++) {
-			if (!buildClassifier()) {
-				return false;
+			while (!buildClassifier()) {
+				tupleWeight = new ArrayList<>();
+				for (int j = 0; j < tuples.size(); j++) {
+					tupleWeight.add(1 / (double) tuples.size());
+				}
 			}
 		}
 		
@@ -337,32 +340,23 @@ public class NBAdaBoost
 		readTuples();
 		SIZE = tuples.size();
 		
-		long start = System.currentTimeMillis();
-		do {
-			tupleWeight = new ArrayList<>();
-			for (int i = 0; i < tuples.size(); i++) {
-				tupleWeight.add(1 / (double) tuples.size());
-			}
+		tupleWeight = new ArrayList<>();
+		for (int i = 0; i < tuples.size(); i++) {
+			tupleWeight.add(1 / (double) tuples.size());
+		}
 
-			attributeCountP1 = new ArrayList<>();
-			attributeCountN1 = new ArrayList<>();
-			attributeCountVals = new HashMap<>();
-			classCountP1 = new ArrayList<>();
-			classCountN1 = new ArrayList<>();
-			errorClassifierList = new ArrayList<>();
-
-		} while (!trainData());
-
-		long end = System.currentTimeMillis();
+		attributeCountP1 = new ArrayList<>();
+		attributeCountN1 = new ArrayList<>();
+		attributeCountVals = new HashMap<>();
+		classCountP1 = new ArrayList<>();
+		classCountN1 = new ArrayList<>();
+		errorClassifierList = new ArrayList<>();
+	
+		trainData();
 
 		testData(trainFile);
-		
-		long start2 = System.currentTimeMillis();
-		testData(testFile);
-		long end2 = System.currentTimeMillis();
 
-		System.out.println(end - start);
-		System.out.println(end2 - start2);
+		testData(testFile);
 	}
 	
 	public static void main(String[] args) throws IOException
