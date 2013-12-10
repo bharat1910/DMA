@@ -165,11 +165,11 @@ public class MeasuresNaiveBayes
 		b = 2;
 		Double fb2 = ((1 + (b * b)) * precision * sensitivity) / ((b * b * precision) + sensitivity );
 		
-		System.out.println("Accuracy            : " + accuracy * 100);
-		System.out.println("Error Rate          : " + errorRate * 100);
-		System.out.println("Sensitivity         : " + sensitivity * 100);
-		System.out.println("Specificity         : " + specificity * 100);
-		System.out.println("Precision           : " + precision * 100);
+		System.out.println("Accuracy            : " + accuracy * 100 + "%");
+		System.out.println("Error Rate          : " + errorRate * 100 + "%");
+		System.out.println("Sensitivity         : " + sensitivity * 100 + "%");
+		System.out.println("Specificity         : " + specificity * 100 + "%");
+		System.out.println("Precision           : " + precision * 100 + "%");
 		System.out.println("F-1 Score           : " + f1score);
 		System.out.println("F Score(beta = 0.5) : " + fb05);
 		System.out.println("F Score (beta = 2)  : " + fb2);
