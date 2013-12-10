@@ -89,6 +89,11 @@ public class NaiveBayes
 		double posProbability, negProbability;
 		int posCount, negCount;
 		
+		truePositive = 0;
+		falseNegative = 0;
+		falsePositive = 0;
+		trueNegative = 0;
+		
 		while ((str = br.readLine()) != null) {
 			posProbability = 1;
 			negProbability = 1;
@@ -158,10 +163,6 @@ public class NaiveBayes
 		attributeCountVals = new HashMap<>();
 		classCountN1 = 0;
 		classCountP1 = 0;
-		truePositive = 0;
-		falseNegative = 0;
-		falsePositive = 0;
-		trueNegative = 0;
 		
 		long start = System.currentTimeMillis();
 		trainData();

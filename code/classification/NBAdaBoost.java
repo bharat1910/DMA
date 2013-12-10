@@ -287,6 +287,11 @@ public class NBAdaBoost
 		String str, cls, predictedCls;
 		int prediction;
 		
+		truePositive = 0;
+		falseNegative = 0;
+		falsePositive = 0;
+		trueNegative = 0;
+		
 		while ((str = br.readLine()) != null) {
 			resultPos = 0;
 			resultNeg = 0;
@@ -340,15 +345,11 @@ public class NBAdaBoost
 		classCountP1 = new ArrayList<>();
 		classCountN1 = new ArrayList<>();
 		errorClassifierList = new ArrayList<>();
-		truePositive = 0;
-		falseNegative = 0;
-		falsePositive = 0;
-		trueNegative = 0;
 				
 		long start = System.currentTimeMillis();
 		trainData();
 		long end = System.currentTimeMillis();
-		
+
 		testData(trainFile);
 		
 		testData(testFile);
