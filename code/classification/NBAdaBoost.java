@@ -216,14 +216,15 @@ public class NBAdaBoost
 		return true;
 	}
 	
-	private void trainData()
+	private boolean trainData()
 	{
 		for (int i=0; i<K_ITER; i++) {
-			boolean flag = false;
-			while(!flag) {
-				flag = buildClassifier();
+			if (!buildClassifier()) {
+				return false;
 			}
 		}
+		
+		return true;
 	}
 	
 	private int testDataWithClassifier(int k, String str) throws IOException
@@ -334,20 +335,22 @@ public class NBAdaBoost
 		readTuples();
 		SIZE = tuples.size();
 		
-		tupleWeight = new ArrayList<>();
-		for (int i=0; i<tuples.size(); i++) {
-			tupleWeight.add(1/(double) tuples.size());
-		}
-		
-		attributeCountP1 = new ArrayList<>();
-		attributeCountN1 = new ArrayList<>();
-		attributeCountVals = new HashMap<>();
-		classCountP1 = new ArrayList<>();
-		classCountN1 = new ArrayList<>();
-		errorClassifierList = new ArrayList<>();
-				
 		long start = System.currentTimeMillis();
-		trainData();
+		do {
+			tupleWeight = new ArrayList<>();
+			for (int i = 0; i < tuples.size(); i++) {
+				tupleWeight.add(1 / (double) tuples.size());
+			}
+
+			attributeCountP1 = new ArrayList<>();
+			attributeCountN1 = new ArrayList<>();
+			attributeCountVals = new HashMap<>();
+			classCountP1 = new ArrayList<>();
+			classCountN1 = new ArrayList<>();
+			errorClassifierList = new ArrayList<>();
+
+		} while (!trainData());
+
 		long end = System.currentTimeMillis();
 
 		testData(trainFile);
